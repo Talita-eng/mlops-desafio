@@ -1,0 +1,14 @@
+artifact_uri: file:///C:/Users/talit/Documents/mlops-nivel1/mlruns/715796667517297357/ba594e7ee5f74ee99f5de7a4ef49db79/artifacts
+end_time: 1759241026951
+entry_point_name: ''
+experiment_id: '715796667517297357'
+lifecycle_stage: active
+run_id: ba594e7ee5f74ee99f5de7a4ef49db79
+run_name: peaceful-cat-169
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1759241016434
+status: 4
+tags: []
+user_id: talit

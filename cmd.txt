@@ -1,0 +1,22 @@
+API:
+
+PowerShell no mlops-nivel1:
+uvicorn app.main:app --reload --port 8000
+http://127.0.0.1:8000/docs
+exemplo:
+{
+  "sepal_length": 5.1,
+  "sepal_width": 3.5,
+  "petal_length": 1.4,
+  "petal_width": 0.2
+}
+
+Para treinar novamente não esquecer de ativar a máquina virtual no PowerShell:
+
+cd C:\Users\talit\Documents\mlops-nivel1
+.venv\Scripts\Activate.ps1
+python train.py
+
+MLFlow:
+
+mlflow ui --backend-store-uri file:///C:/Users/talit/Documents/mlops-nivel1/mlruns --port 8085

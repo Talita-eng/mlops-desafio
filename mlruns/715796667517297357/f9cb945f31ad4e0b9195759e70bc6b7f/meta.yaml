@@ -1,0 +1,14 @@
+artifact_uri: file:///C:/Users/talit/Documents/mlops-nivel1/mlruns/715796667517297357/f9cb945f31ad4e0b9195759e70bc6b7f/artifacts
+end_time: 1759529632702
+entry_point_name: ''
+experiment_id: '715796667517297357'
+lifecycle_stage: active
+run_id: f9cb945f31ad4e0b9195759e70bc6b7f
+run_name: secretive-wren-426
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1759529617989
+status: 3
+tags: []
+user_id: talit

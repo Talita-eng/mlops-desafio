@@ -1,0 +1,14 @@
+artifact_uri: file:///C:/Users/talit/Documents/mlops-nivel1/mlruns/715796667517297357/0aa2a454ec6246c3a686d13936ac4246/artifacts
+end_time: 1759242253590
+entry_point_name: ''
+experiment_id: '715796667517297357'
+lifecycle_stage: active
+run_id: 0aa2a454ec6246c3a686d13936ac4246
+run_name: abrasive-wolf-506
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1759242245062
+status: 3
+tags: []
+user_id: talit

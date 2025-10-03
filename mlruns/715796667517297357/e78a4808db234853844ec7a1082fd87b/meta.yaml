@@ -1,0 +1,14 @@
+artifact_uri: file:///C:/Users/talit/Documents/mlops-nivel1/mlruns/715796667517297357/e78a4808db234853844ec7a1082fd87b/artifacts
+end_time: 1759241334725
+entry_point_name: ''
+experiment_id: '715796667517297357'
+lifecycle_stage: active
+run_id: e78a4808db234853844ec7a1082fd87b
+run_name: gaudy-hawk-598
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1759241326755
+status: 3
+tags: []
+user_id: talit
