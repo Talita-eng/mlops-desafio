@@ -1,0 +1,14 @@
+artifact_uri: file:///C:/Users/talit/Documents/mlops-nivel1/mlruns/117387305871841647/e800710a820240cf8bbee9703ced5ac0/artifacts
+end_time: 1759690062032
+entry_point_name: ''
+experiment_id: '117387305871841647'
+lifecycle_stage: active
+run_id: e800710a820240cf8bbee9703ced5ac0
+run_name: trusting-moth-298
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1759690045635
+status: 3
+tags: []
+user_id: talit

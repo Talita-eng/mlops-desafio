@@ -1,0 +1,14 @@
+artifact_uri: file:///C:/Users/talit/Documents/mlops-nivel1/mlruns/117387305871841647/03b15a3fa9234f7788e471e3d7861930/artifacts
+end_time: 1759689338168
+entry_point_name: ''
+experiment_id: '117387305871841647'
+lifecycle_stage: active
+run_id: 03b15a3fa9234f7788e471e3d7861930
+run_name: wistful-calf-662
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1759689318862
+status: 3
+tags: []
+user_id: talit

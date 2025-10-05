@@ -1,0 +1,14 @@
+artifact_uri: file:///C:/Users/talit/Documents/mlops-nivel1/mlruns/117387305871841647/1efaf98946ce41d0b068d8d00059a22c/artifacts
+end_time: 1759689936087
+entry_point_name: ''
+experiment_id: '117387305871841647'
+lifecycle_stage: active
+run_id: 1efaf98946ce41d0b068d8d00059a22c
+run_name: traveling-fish-577
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1759689920370
+status: 3
+tags: []
+user_id: talit

@@ -8,8 +8,10 @@ exemplo:
   "sepal_length": 5.1,
   "sepal_width": 3.5,
   "petal_length": 1.4,
-  "petal_width": 0.2
+  "petal_width": 0.2,
+  "true_label": 0
 }
+
 
 Para treinar novamente não esquecer de ativar a máquina virtual no PowerShell:
 
