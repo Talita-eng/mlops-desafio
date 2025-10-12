@@ -1,0 +1,14 @@
+artifact_uri: file:///C:/Users/talit/Documents/mlops-nivel1/mlruns/214233492108895723/466080c87a8d41cb9f21ed5354f3a69a/artifacts
+end_time: 1760232790185
+entry_point_name: ''
+experiment_id: '214233492108895723'
+lifecycle_stage: active
+run_id: 466080c87a8d41cb9f21ed5354f3a69a
+run_name: angry-penguin-264
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1760232772741
+status: 3
+tags: []
+user_id: talit

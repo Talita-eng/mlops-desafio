@@ -1,0 +1,14 @@
+artifact_uri: file:///C:/Users/talit/Documents/mlops-nivel1/mlruns/214233492108895723/5216860479a440b0b0d7e26dd01897b1/artifacts
+end_time: 1760232454166
+entry_point_name: ''
+experiment_id: '214233492108895723'
+lifecycle_stage: active
+run_id: 5216860479a440b0b0d7e26dd01897b1
+run_name: judicious-crab-213
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1760232433048
+status: 3
+tags: []
+user_id: talit

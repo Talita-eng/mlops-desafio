@@ -1,0 +1,14 @@
+artifact_uri: file:///C:/Users/talit/Documents/mlops-nivel1/mlruns/214233492108895723/896d5a0ae8f84eee8d4c2e15a103384b/artifacts
+end_time: 1760232270802
+entry_point_name: ''
+experiment_id: '214233492108895723'
+lifecycle_stage: active
+run_id: 896d5a0ae8f84eee8d4c2e15a103384b
+run_name: charming-stag-283
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1760232249583
+status: 3
+tags: []
+user_id: talit

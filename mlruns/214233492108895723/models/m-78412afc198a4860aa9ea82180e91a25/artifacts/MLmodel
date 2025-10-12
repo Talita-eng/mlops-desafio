@@ -1,0 +1,22 @@
+artifact_path: file:///C:/Users/talit/Documents/mlops-nivel1/mlruns/214233492108895723/models/m-78412afc198a4860aa9ea82180e91a25/artifacts
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.pkl
+    predict_fn: predict
+    python_version: 3.13.7
+  sklearn:
+    code: null
+    pickled_model: model.pkl
+    serialization_format: cloudpickle
+    sklearn_version: 1.7.2
+mlflow_version: 3.4.0
+model_id: m-78412afc198a4860aa9ea82180e91a25
+model_size_bytes: 1515
+model_uuid: m-78412afc198a4860aa9ea82180e91a25
+prompts: null
+run_id: 50af11d2b5084103b1b07557e23c50a6
+utc_time_created: '2025-10-12 01:23:22.470395'

@@ -1,0 +1,14 @@
+artifact_uri: file:///C:/Users/talit/Documents/mlops-nivel1/mlruns/214233492108895723/8b8bb52c5b37493aa1754dd127ec8fba/artifacts
+end_time: 1759861876579
+entry_point_name: ''
+experiment_id: '214233492108895723'
+lifecycle_stage: active
+run_id: 8b8bb52c5b37493aa1754dd127ec8fba
+run_name: selective-yak-332
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1759861862784
+status: 3
+tags: []
+user_id: talit

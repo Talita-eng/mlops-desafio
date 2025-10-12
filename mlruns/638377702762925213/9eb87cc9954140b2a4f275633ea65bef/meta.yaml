@@ -1,0 +1,14 @@
+artifact_uri: file:///C:/Users/talit/Documents/mlops-nivel1/mlruns/638377702762925213/9eb87cc9954140b2a4f275633ea65bef/artifacts
+end_time: 1760234739675
+entry_point_name: ''
+experiment_id: '638377702762925213'
+lifecycle_stage: active
+run_id: 9eb87cc9954140b2a4f275633ea65bef
+run_name: wise-skunk-696
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1760234719798
+status: 3
+tags: []
+user_id: talit

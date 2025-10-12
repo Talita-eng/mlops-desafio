@@ -1,0 +1,14 @@
+artifact_uri: file:///C:/Users/talit/Documents/mlops-nivel1/mlruns/214233492108895723/50af11d2b5084103b1b07557e23c50a6/artifacts
+end_time: 1760232222087
+entry_point_name: ''
+experiment_id: '214233492108895723'
+lifecycle_stage: active
+run_id: 50af11d2b5084103b1b07557e23c50a6
+run_name: adorable-hawk-402
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1760232201838
+status: 3
+tags: []
+user_id: talit

@@ -1,0 +1,14 @@
+artifact_uri: file:///C:/Users/talit/Documents/mlops-nivel1/mlruns/214233492108895723/cc80765031b6495c80ab2e06b3aa5a2e/artifacts
+end_time: 1760232333280
+entry_point_name: ''
+experiment_id: '214233492108895723'
+lifecycle_stage: active
+run_id: cc80765031b6495c80ab2e06b3aa5a2e
+run_name: mysterious-perch-375
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1760232312983
+status: 3
+tags: []
+user_id: talit

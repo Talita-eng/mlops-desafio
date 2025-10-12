@@ -1,0 +1,14 @@
+artifact_uri: file:///C:/Users/talit/Documents/mlops-nivel1/mlruns/214233492108895723/f7689c979a634194a5f03d421339bb3b/artifacts
+end_time: 1759867025196
+entry_point_name: ''
+experiment_id: '214233492108895723'
+lifecycle_stage: active
+run_id: f7689c979a634194a5f03d421339bb3b
+run_name: serious-worm-270
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1759867006094
+status: 3
+tags: []
+user_id: talit

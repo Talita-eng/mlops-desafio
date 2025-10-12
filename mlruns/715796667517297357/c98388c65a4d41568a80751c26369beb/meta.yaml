@@ -1,0 +1,14 @@
+artifact_uri: file:///C:/Users/talit/Documents/mlops-nivel1/mlruns/715796667517297357/c98388c65a4d41568a80751c26369beb/artifacts
+end_time: 1760232019282
+entry_point_name: ''
+experiment_id: '715796667517297357'
+lifecycle_stage: active
+run_id: c98388c65a4d41568a80751c26369beb
+run_name: suave-swan-61
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1760232002144
+status: 3
+tags: []
+user_id: talit
