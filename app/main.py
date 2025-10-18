@@ -11,11 +11,13 @@ from sklearn.metrics import accuracy_score
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.svm import SVC
+from mlflow import MlflowClient
+from datetime import datetime
 
 # =========================================
 # Inicialização da aplicação
 # =========================================
-app = FastAPI(title="MLOps Nível 3 – Custom Dataset")
+app = FastAPI(title="MLOps Nível 4 – Listagem de Modelos")
 
 LABELS = {}
 
@@ -91,7 +93,7 @@ def predict(req: PredictRequest):
     return response
 
 # =========================================
-# Endpoint de treinamento (somente custom)
+# Endpoint de treinamento
 # =========================================
 
 
@@ -140,13 +142,21 @@ async def train_model(
 
     # 4️⃣ Logar e salvar modelo
     os.makedirs("models", exist_ok=True)
-    mlflow.set_experiment("mlops_nivel3_custom")
+    mlflow.set_experiment("mlops_nivel4_registry")
 
     with mlflow.start_run() as run:
         mlflow.log_param("model_type", model_type)
         mlflow.log_metric("accuracy", acc)
         mlflow.sklearn.log_model(clf, "model")
 
+        # ✅ Registrar o modelo no MLflow Model Registry
+        registered_model_name = f"{model_type}_Model"
+        mlflow.register_model(
+            model_uri=f"runs:/{run.info.run_id}/model",
+            name=registered_model_name
+        )
+
+        # Salvar modelo localmente
         safe_run_id = run.info.run_id[:8]
         serve_path = f"models/custom_model_{safe_run_id}"
         os.makedirs(serve_path, exist_ok=True)
@@ -156,9 +166,53 @@ async def train_model(
     model = mlflow.pyfunc.load_model(serve_path)
 
     return {
-        "message": "Novo modelo treinado e carregado com sucesso!",
+        "message": "Novo modelo treinado, registrado e carregado com sucesso!",
         "model_type": model_type,
         "accuracy": acc,
         "run_id": run.info.run_id,
+        "model_registry_name": registered_model_name,
         "model_path": serve_path
     }
+
+# =========================================
+# ✅ Novo Endpoint: Listagem de Modelos Registrados
+# =========================================
+
+
+@app.get("/models")
+def list_models():
+    """
+    Lista todos os modelos registrados no MLflow Model Registry.
+    Retorna nome, versão, estágio e data de criação.
+    Compatível com versões antigas do MLflow.
+    """
+    client = MlflowClient()
+
+    try:
+        # Compatibilidade: usa search_registered_models() se list_registered_models() não existir
+        if hasattr(client, "list_registered_models"):
+            registered_models = client.list_registered_models()
+        else:
+            registered_models = client.search_registered_models()
+    except Exception as e:
+        return {"error": f"Falha ao listar modelos: {str(e)}"}
+
+    models_info = []
+
+    for model in registered_models:
+        # dependendo da versão, o objeto pode ter estrutura diferente
+        latest_versions = getattr(model, "latest_versions", [])
+        for version in latest_versions:
+            models_info.append({
+                "name": model.name,
+                "version": version.version,
+                "stage": version.current_stage,
+                "creation_date": datetime.fromtimestamp(
+                    version.creation_timestamp / 1000).strftime("%Y-%m-%d %H:%M:%S"),
+                "run_id": version.run_id
+            })
+
+    if not models_info:
+        return {"message": "Nenhum modelo registrado no MLflow ainda."}
+
+    return {"registered_models": models_info}

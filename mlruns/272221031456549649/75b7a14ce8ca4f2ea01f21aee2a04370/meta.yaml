@@ -1,0 +1,14 @@
+artifact_uri: file:///C:/Users/talit/Documents/mlops-nivel1/mlruns/272221031456549649/75b7a14ce8ca4f2ea01f21aee2a04370/artifacts
+end_time: 1760826956342
+entry_point_name: ''
+experiment_id: '272221031456549649'
+lifecycle_stage: active
+run_id: 75b7a14ce8ca4f2ea01f21aee2a04370
+run_name: intrigued-shrew-171
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1760826932550
+status: 3
+tags: []
+user_id: talit

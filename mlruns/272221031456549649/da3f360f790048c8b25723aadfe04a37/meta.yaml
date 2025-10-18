@@ -1,0 +1,14 @@
+artifact_uri: file:///C:/Users/talit/Documents/mlops-nivel1/mlruns/272221031456549649/da3f360f790048c8b25723aadfe04a37/artifacts
+end_time: 1760826525004
+entry_point_name: ''
+experiment_id: '272221031456549649'
+lifecycle_stage: active
+run_id: da3f360f790048c8b25723aadfe04a37
+run_name: stately-skunk-731
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1760826503646
+status: 3
+tags: []
+user_id: talit

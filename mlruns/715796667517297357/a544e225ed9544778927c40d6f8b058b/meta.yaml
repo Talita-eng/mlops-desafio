@@ -1,0 +1,14 @@
+artifact_uri: file:///C:/Users/talit/Documents/mlops-nivel1/mlruns/715796667517297357/a544e225ed9544778927c40d6f8b058b/artifacts
+end_time: 1760826188743
+entry_point_name: ''
+experiment_id: '715796667517297357'
+lifecycle_stage: active
+run_id: a544e225ed9544778927c40d6f8b058b
+run_name: legendary-bear-522
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1760826159826
+status: 3
+tags: []
+user_id: talit
