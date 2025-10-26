@@ -1,0 +1,14 @@
+artifact_uri: file:///C:/Users/talit/Documents/mlops-nivel1/mlruns/467038824014101844/dc01553510234001a9c2c61ec2cd85f8/artifacts
+end_time: 1761431590640
+entry_point_name: ''
+experiment_id: '467038824014101844'
+lifecycle_stage: active
+run_id: dc01553510234001a9c2c61ec2cd85f8
+run_name: sincere-mink-572
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1761431579987
+status: 3
+tags: []
+user_id: talit

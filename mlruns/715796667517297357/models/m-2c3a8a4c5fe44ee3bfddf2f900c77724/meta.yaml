@@ -1,0 +1,10 @@
+artifact_location: file:///C:/Users/talit/Documents/mlops-nivel1/mlruns/715796667517297357/models/m-2c3a8a4c5fe44ee3bfddf2f900c77724/artifacts
+creation_timestamp: 1761513531606
+experiment_id: '715796667517297357'
+last_updated_timestamp: 1761513544676
+model_id: m-2c3a8a4c5fe44ee3bfddf2f900c77724
+model_type: null
+name: model
+source_run_id: fb0e91ba7fa141c2aa7557a8b7759412
+status: 2
+status_message: null

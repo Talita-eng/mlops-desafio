@@ -17,34 +17,32 @@ from datetime import datetime
 # =========================================
 # Inicialização da aplicação
 # =========================================
-app = FastAPI(title="MLOps Nível 4 – Listagem de Modelos")
+app = FastAPI(title="MLOps Nível 5")
 
 LABELS = {}
+model = None  # modelo ativo em memória
+
 
 # =========================================
 # Enum para os tipos de modelo
 # =========================================
-
-
 class ModelType(str, Enum):
     RandomForest = "RandomForest"
     LogisticRegression = "LogisticRegression"
     SVC = "SVC"
 
+
 # =========================================
 # Requisição de predição
 # =========================================
-
-
 class PredictRequest(BaseModel):
     features: list[float]
     true_label: int | None = None
 
+
 # =========================================
 # Função utilitária: carregar modelo mais recente
 # =========================================
-
-
 def load_latest_model(models_dir="models"):
     all_models = [d for d in os.listdir(
         models_dir) if d.startswith("custom_model_")]
@@ -66,15 +64,14 @@ except Exception:
     print("⚠️ Nenhum modelo encontrado ainda. Treine um novo via /train.")
     model = None
 
+
 # =========================================
 # Endpoint de predição
 # =========================================
-
-
 @app.post("/predict")
 def predict(req: PredictRequest):
     if model is None:
-        return {"error": "Nenhum modelo carregado. Treine um modelo primeiro via /train."}
+        return {"error": "Nenhum modelo carregado. Treine ou selecione um modelo primeiro via /train ou /use-model."}
 
     data = [req.features]
     pred = model.predict(data)
@@ -92,11 +89,10 @@ def predict(req: PredictRequest):
 
     return response
 
+
 # =========================================
 # Endpoint de treinamento
 # =========================================
-
-
 @app.post("/train")
 async def train_model(
     model_type: ModelType = Form(
@@ -142,7 +138,7 @@ async def train_model(
 
     # 4️⃣ Logar e salvar modelo
     os.makedirs("models", exist_ok=True)
-    mlflow.set_experiment("mlops_nivel4_registry")
+    mlflow.set_experiment("mlops_nivel5_registry")
 
     with mlflow.start_run() as run:
         mlflow.log_param("model_type", model_type)
@@ -152,9 +148,7 @@ async def train_model(
         # ✅ Registrar o modelo no MLflow Model Registry
         registered_model_name = f"{model_type}_Model"
         mlflow.register_model(
-            model_uri=f"runs:/{run.info.run_id}/model",
-            name=registered_model_name
-        )
+            model_uri=f"runs:/{run.info.run_id}/model", name=registered_model_name)
 
         # Salvar modelo localmente
         safe_run_id = run.info.run_id[:8]
@@ -174,22 +168,18 @@ async def train_model(
         "model_path": serve_path
     }
 
-# =========================================
-# ✅ Novo Endpoint: Listagem de Modelos Registrados
-# =========================================
 
-
+# =========================================
+# ✅ Nível 4: Listagem de modelos
+# =========================================
 @app.get("/models")
 def list_models():
     """
     Lista todos os modelos registrados no MLflow Model Registry.
     Retorna nome, versão, estágio e data de criação.
-    Compatível com versões antigas do MLflow.
     """
     client = MlflowClient()
-
     try:
-        # Compatibilidade: usa search_registered_models() se list_registered_models() não existir
         if hasattr(client, "list_registered_models"):
             registered_models = client.list_registered_models()
         else:
@@ -198,17 +188,14 @@ def list_models():
         return {"error": f"Falha ao listar modelos: {str(e)}"}
 
     models_info = []
-
-    for model in registered_models:
-        # dependendo da versão, o objeto pode ter estrutura diferente
-        latest_versions = getattr(model, "latest_versions", [])
+    for model_obj in registered_models:
+        latest_versions = getattr(model_obj, "latest_versions", [])
         for version in latest_versions:
             models_info.append({
-                "name": model.name,
+                "name": model_obj.name,
                 "version": version.version,
                 "stage": version.current_stage,
-                "creation_date": datetime.fromtimestamp(
-                    version.creation_timestamp / 1000).strftime("%Y-%m-%d %H:%M:%S"),
+                "creation_date": datetime.fromtimestamp(version.creation_timestamp / 1000).strftime("%Y-%m-%d %H:%M:%S"),
                 "run_id": version.run_id
             })
 
@@ -216,3 +203,27 @@ def list_models():
         return {"message": "Nenhum modelo registrado no MLflow ainda."}
 
     return {"registered_models": models_info}
+
+
+# =========================================
+# ✅ Nível 5: Troca de modelo ativo (/use-model)
+# =========================================
+@app.post("/use-model")
+def use_model(model_name: str = Form(...), version: str = Form(...)):
+    """
+    Carrega em memória um modelo específico registrado no MLflow.
+    Exemplo:
+        model_name = "RandomForest_Model"
+        version = "2"
+    """
+    global model
+
+    client = MlflowClient()
+    try:
+        model_uri = f"models:/{model_name}/{version}"
+        model = mlflow.pyfunc.load_model(model_uri)
+        print(
+            f"✅ Modelo carregado em memória: {model_name} (versão {version})")
+        return {"message": f"Modelo {model_name} (versão {version}) carregado com sucesso e agora é o ativo."}
+    except Exception as e:
+        return {"error": f"Falha ao carregar modelo {model_name} versão {version}: {str(e)}"}

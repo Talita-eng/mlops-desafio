@@ -1,0 +1,14 @@
+artifact_uri: file:///C:/Users/talit/Documents/mlops-nivel1/mlruns/715796667517297357/c832361fd3c54132869281fb569639d0/artifacts
+end_time: 1761432915665
+entry_point_name: ''
+experiment_id: '715796667517297357'
+lifecycle_stage: active
+run_id: c832361fd3c54132869281fb569639d0
+run_name: sedate-bee-191
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1761432904844
+status: 3
+tags: []
+user_id: talit

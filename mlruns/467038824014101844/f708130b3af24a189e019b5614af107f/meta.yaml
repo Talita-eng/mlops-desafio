@@ -1,0 +1,14 @@
+artifact_uri: file:///C:/Users/talit/Documents/mlops-nivel1/mlruns/467038824014101844/f708130b3af24a189e019b5614af107f/artifacts
+end_time: 1761432220769
+entry_point_name: ''
+experiment_id: '467038824014101844'
+lifecycle_stage: active
+run_id: f708130b3af24a189e019b5614af107f
+run_name: shivering-hen-29
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1761432210288
+status: 3
+tags: []
+user_id: talit

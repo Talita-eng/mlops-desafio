@@ -1,0 +1,14 @@
+artifact_uri: file:///C:/Users/talit/Documents/mlops-nivel1/mlruns/467038824014101844/dd35e0b04a2740dc8606e12641f8a7d4/artifacts
+end_time: 1761513805496
+entry_point_name: ''
+experiment_id: '467038824014101844'
+lifecycle_stage: active
+run_id: dd35e0b04a2740dc8606e12641f8a7d4
+run_name: calm-chimp-774
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1761513794232
+status: 3
+tags: []
+user_id: talit

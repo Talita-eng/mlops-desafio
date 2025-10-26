@@ -1,0 +1,14 @@
+artifact_uri: file:///C:/Users/talit/Documents/mlops-nivel1/mlruns/467038824014101844/c29ac27f38724390833df7ac02eb1868/artifacts
+end_time: 1761432159458
+entry_point_name: ''
+experiment_id: '467038824014101844'
+lifecycle_stage: active
+run_id: c29ac27f38724390833df7ac02eb1868
+run_name: kindly-steed-130
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1761432149037
+status: 3
+tags: []
+user_id: talit

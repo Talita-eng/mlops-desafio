@@ -1,0 +1,14 @@
+artifact_uri: file:///C:/Users/talit/Documents/mlops-nivel1/mlruns/467038824014101844/5311bfa7beef4c98b8663e107c701394/artifacts
+end_time: 1761432971332
+entry_point_name: ''
+experiment_id: '467038824014101844'
+lifecycle_stage: active
+run_id: 5311bfa7beef4c98b8663e107c701394
+run_name: loud-squid-644
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1761432966181
+status: 3
+tags: []
+user_id: talit

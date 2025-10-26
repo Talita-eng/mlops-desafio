@@ -1,0 +1,14 @@
+artifact_uri: file:///C:/Users/talit/Documents/mlops-nivel1/mlruns/715796667517297357/1a6f92cb48e046ba834023fef70dbf3c/artifacts
+end_time: 1761429293049
+entry_point_name: ''
+experiment_id: '715796667517297357'
+lifecycle_stage: active
+run_id: 1a6f92cb48e046ba834023fef70dbf3c
+run_name: able-penguin-412
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1761429262807
+status: 3
+tags: []
+user_id: talit
