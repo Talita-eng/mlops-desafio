@@ -1,4 +1,4 @@
-from fastapi import FastAPI, UploadFile, File, Form
+from fastapi import FastAPI, UploadFile, File, Form, HTTPException
 from pydantic import BaseModel
 from enum import Enum
 import pandas as pd
@@ -6,6 +6,7 @@ import mlflow
 import mlflow.sklearn
 import mlflow.pyfunc
 import os
+import json
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 from sklearn.ensemble import RandomForestClassifier
@@ -17,33 +18,39 @@ from datetime import datetime
 # =========================================
 # Inicialização da aplicação
 # =========================================
-app = FastAPI(title="MLOps Nível 5")
+app = FastAPI(title="MLOps Nível 6")
 
 LABELS = {}
-model = None  # modelo ativo em memória
-
+model = None
+# 🔹 Novo: guarda informações sobre o modelo ativo (n_features, etc.)
+MODEL_METADATA = {}
 
 # =========================================
-# Enum para os tipos de modelo
+# Enum para tipos de modelos
 # =========================================
+
+
 class ModelType(str, Enum):
     RandomForest = "RandomForest"
     LogisticRegression = "LogisticRegression"
     SVC = "SVC"
 
+# =========================================
+# Estrutura de requisição de predição
+# =========================================
 
-# =========================================
-# Requisição de predição
-# =========================================
+
 class PredictRequest(BaseModel):
     features: list[float]
     true_label: int | None = None
 
+# =========================================
+# Utilitários de modelo
+# =========================================
 
-# =========================================
-# Função utilitária: carregar modelo mais recente
-# =========================================
+
 def load_latest_model(models_dir="models"):
+    """Carrega o modelo mais recente salvo localmente."""
     all_models = [d for d in os.listdir(
         models_dir) if d.startswith("custom_model_")]
     if not all_models:
@@ -52,27 +59,63 @@ def load_latest_model(models_dir="models"):
         os.path.join(models_dir, d)))
     model_path = os.path.join(models_dir, latest_model)
     print("Carregando modelo mais recente:", model_path)
-    return mlflow.pyfunc.load_model(model_path)
+    return model_path, mlflow.pyfunc.load_model(model_path)
+
+
+def load_model_metadata(model_path):
+    """Carrega metadados salvos junto ao modelo (número de features, nomes, etc.)."""
+    global MODEL_METADATA
+    metadata_path = os.path.join(model_path, "metadata.json")
+    if os.path.exists(metadata_path):
+        with open(metadata_path, "r") as f:
+            MODEL_METADATA = json.load(f)
+        print(f"Metadados carregados: {MODEL_METADATA}")
+    else:
+        MODEL_METADATA = {}
+        print("⚠️ Nenhum metadata.json encontrado para este modelo.")
 
 
 # =========================================
-# Carregar modelo inicial
+# Tenta carregar modelo inicial
 # =========================================
 try:
-    model = load_latest_model()
+    model_path, model = load_latest_model()
+    load_model_metadata(model_path)
 except Exception:
     print("⚠️ Nenhum modelo encontrado ainda. Treine um novo via /train.")
     model = None
 
+# =========================================
+# Endpoint de predição (Nível 6)
+# =========================================
 
-# =========================================
-# Endpoint de predição
-# =========================================
+
 @app.post("/predict")
 def predict(req: PredictRequest):
     if model is None:
-        return {"error": "Nenhum modelo carregado. Treine ou selecione um modelo primeiro via /train ou /use-model."}
+        raise HTTPException(
+            status_code=400, detail="Nenhum modelo carregado. Treine ou selecione um modelo primeiro via /train ou /use-model.")
 
+    # 🔹 Validação 1: quantidade de parâmetros
+    expected_features = MODEL_METADATA.get("n_features")
+    if expected_features and len(req.features) != expected_features:
+        example = [0.0] * expected_features
+        raise HTTPException(
+            status_code=400,
+            detail={
+                "error": f"Número incorreto de parâmetros: esperado {expected_features}, recebido {len(req.features)}.",
+                "expected_format": {"features": example},
+            }
+        )
+
+    # 🔹 Validação 2: tipo dos dados
+    if not all(isinstance(x, (int, float)) for x in req.features):
+        raise HTTPException(
+            status_code=400,
+            detail="Os valores em 'features' devem ser numéricos (int ou float)."
+        )
+
+    # ✅ Realiza predição
     data = [req.features]
     pred = model.predict(data)
     pred_int = int(pred[0])
@@ -89,24 +132,21 @@ def predict(req: PredictRequest):
 
     return response
 
+# =========================================
+# Endpoint de treinamento (Níveis 2–5)
+# =========================================
 
-# =========================================
-# Endpoint de treinamento
-# =========================================
+
 @app.post("/train")
 async def train_model(
     model_type: ModelType = Form(
         ..., description="Tipo de modelo: RandomForest, LogisticRegression, SVC"),
     file: UploadFile = File(...,
-                            description="Arquivo CSV contendo as features e a coluna 'target'")
+                            description="Arquivo CSV com as features e a coluna 'target'")
 ):
-    """
-    Treina um modelo a partir de um dataset customizado enviado pelo usuário.
-    O CSV deve conter a coluna 'target' como variável alvo.
-    """
-    global model, LABELS
+    global model, LABELS, MODEL_METADATA
 
-    # 1️⃣ Carregar dataset customizado
+    # 1️⃣ Carregar dataset
     try:
         df = pd.read_csv(file.file)
     except Exception as e:
@@ -119,7 +159,7 @@ async def train_model(
     y = df["target"]
     LABELS = {i: str(i) for i in sorted(y.unique())}
 
-    # 2️⃣ Selecionar o tipo de modelo
+    # 2️⃣ Escolher tipo de modelo
     if model_type == ModelType.RandomForest:
         clf = RandomForestClassifier(n_estimators=100, random_state=42)
     elif model_type == ModelType.LogisticRegression:
@@ -138,14 +178,14 @@ async def train_model(
 
     # 4️⃣ Logar e salvar modelo
     os.makedirs("models", exist_ok=True)
-    mlflow.set_experiment("mlops_nivel5_registry")
+    mlflow.set_experiment("mlops_nivel6_registry")
 
     with mlflow.start_run() as run:
         mlflow.log_param("model_type", model_type)
         mlflow.log_metric("accuracy", acc)
         mlflow.sklearn.log_model(clf, "model")
 
-        # ✅ Registrar o modelo no MLflow Model Registry
+        # Registrar modelo no MLflow Model Registry
         registered_model_name = f"{model_type}_Model"
         mlflow.register_model(
             model_uri=f"runs:/{run.info.run_id}/model", name=registered_model_name)
@@ -156,8 +196,14 @@ async def train_model(
         os.makedirs(serve_path, exist_ok=True)
         mlflow.sklearn.save_model(clf, serve_path)
 
-    # Atualiza o modelo ativo
+        # 🔹 Novo: salvar metadados
+        metadata = {"n_features": X.shape[1], "feature_names": list(X.columns)}
+        with open(os.path.join(serve_path, "metadata.json"), "w") as f:
+            json.dump(metadata, f)
+
+    # Atualiza modelo ativo e metadados
     model = mlflow.pyfunc.load_model(serve_path)
+    MODEL_METADATA = metadata
 
     return {
         "message": "Novo modelo treinado, registrado e carregado com sucesso!",
@@ -165,19 +211,17 @@ async def train_model(
         "accuracy": acc,
         "run_id": run.info.run_id,
         "model_registry_name": registered_model_name,
-        "model_path": serve_path
+        "model_path": serve_path,
+        "metadata": metadata
     }
 
+# =========================================
+# Listagem de modelos (Nível 4)
+# =========================================
 
-# =========================================
-# ✅ Nível 4: Listagem de modelos
-# =========================================
+
 @app.get("/models")
 def list_models():
-    """
-    Lista todos os modelos registrados no MLflow Model Registry.
-    Retorna nome, versão, estágio e data de criação.
-    """
     client = MlflowClient()
     try:
         if hasattr(client, "list_registered_models"):
@@ -204,19 +248,14 @@ def list_models():
 
     return {"registered_models": models_info}
 
+# =========================================
+# Troca de modelo ativo (Nível 5)
+# =========================================
 
-# =========================================
-# ✅ Nível 5: Troca de modelo ativo (/use-model)
-# =========================================
+
 @app.post("/use-model")
 def use_model(model_name: str = Form(...), version: str = Form(...)):
-    """
-    Carrega em memória um modelo específico registrado no MLflow.
-    Exemplo:
-        model_name = "RandomForest_Model"
-        version = "2"
-    """
-    global model
+    global model, MODEL_METADATA
 
     client = MlflowClient()
     try:
@@ -224,6 +263,12 @@ def use_model(model_name: str = Form(...), version: str = Form(...)):
         model = mlflow.pyfunc.load_model(model_uri)
         print(
             f"✅ Modelo carregado em memória: {model_name} (versão {version})")
+
+        # Tenta carregar metadados locais se existir
+        model_dir = f"models/{model_name}_v{version}"
+        if os.path.exists(model_dir):
+            load_model_metadata(model_dir)
+
         return {"message": f"Modelo {model_name} (versão {version}) carregado com sucesso e agora é o ativo."}
     except Exception as e:
         return {"error": f"Falha ao carregar modelo {model_name} versão {version}: {str(e)}"}

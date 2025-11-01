@@ -1,0 +1,14 @@
+artifact_uri: file:///C:/Users/talit/Documents/mlops-nivel1/mlruns/916240769476433897/a5beb0c578b84a34b3f3f1c081706fdd/artifacts
+end_time: 1762031361727
+entry_point_name: ''
+experiment_id: '916240769476433897'
+lifecycle_stage: active
+run_id: a5beb0c578b84a34b3f3f1c081706fdd
+run_name: angry-cod-450
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1762031350683
+status: 3
+tags: []
+user_id: talit
